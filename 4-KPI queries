@@ -1,0 +1,99 @@
+\\KPI 1: Order Lead Time (gesamter Prozess)
+SELECT 
+    order_id,
+    MIN(status_date) AS start_date,
+    MAX(status_date) AS end_date,
+    JULIANDAY(MAX(status_date)) - JULIANDAY(MIN(status_date)) AS lead_time_days
+FROM order_status_history
+GROUP BY order_id;
+
+\\KPI 2: Average Lead Time (Business Overview)
+  SELECT 
+    AVG(lead_time_days) AS avg_lead_time
+FROM (
+    SELECT 
+        order_id,
+        JULIANDAY(MAX(status_date)) - JULIANDAY(MIN(status_date)) AS lead_time_days
+    FROM order_status_history
+    GROUP BY order_id
+);
+
+\\KPI 3: Delivery Time (Shipping Performance)
+
+SELECT 
+    AVG(JULIANDAY(delivery_date) - JULIANDAY(shipped_date)) AS avg_delivery_time
+FROM shipments
+WHERE delivery_date IS NOT NULL;
+
+\\KPI 4: Open Orders (Pipeline Status)
+SELECT 
+    status,
+    COUNT(*) AS total_orders
+FROM orders
+GROUP BY status;
+
+\\KPI 5: Bottleneck Analysis (Process Delay)
+SELECT 
+    status,
+    COUNT(*) AS occurrences
+FROM order_status_history
+GROUP BY status
+ORDER BY occurrences DESC;
+
+\\KPI 6: Delayed Shipments
+SELECT 
+    shipment_id,
+    order_id,
+    JULIANDAY(delivery_date) - JULIANDAY(shipped_date) AS delivery_days
+FROM shipments
+WHERE delivery_date IS NOT NULL
+  AND JULIANDAY(delivery_date) - JULIANDAY(shipped_date) > 2;
+
+KPI 7: Missing Customer Data (Data Quality KPI)
+SELECT 
+    COUNT(*) AS missing_email
+FROM customers
+WHERE email IS NULL;
+
+SELECT 
+    COUNT(*) AS missing_city
+FROM customers
+WHERE city IS NULL;
+
+\\KPI 8: Customer Segments Overview
+SELECT 
+    customer_segment,
+    COUNT(*) AS total_customers
+FROM customers
+GROUP BY customer_segment;
+
+\\KPI 9:  Top Produkte
+SELECT
+    product_id,
+    SUM(revenue) AS total_revenue
+FROM fact_order_items
+GROUP BY product_id
+ORDER BY total_revenue DESC; 
+
+ \\KPI 10: Window Function Version 
+SELECT *,
+SUM(revenue) OVER (PARTITION BY product_id) AS total_revenue_per_product
+FROM fact_order_items;
+
+ \\KPI 11: Ranking Produkte 
+SELECT *,
+RANK() OVER (ORDER BY revenue DESC) AS product_rank
+FROM fact_order_items;
+
+  \\KPI 10: Customer Value
+SELECT
+    order_id,
+    SUM(revenue) OVER (PARTITION BY order_id) AS order_total
+FROM fact_order_items;
+
+\\KPI 11= Revenue Per Category 
+select category , sum (cost_price) As [Revenue Per category] 
+From dim_product
+GROUP By category
+HAVING sum (cost_price) > 100
+ORDER By  sum (cost_price) > 100 DESC ;
