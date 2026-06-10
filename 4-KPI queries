@@ -97,3 +97,13 @@ From dim_product
 GROUP By category
 HAVING sum (cost_price) > 100
 ORDER By  sum (cost_price) > 100 DESC ;
+
+\\ Window Fuction : ROW_NUMBER() 
+ Nummeriere alle Bestellungen pro Kunde nach Datum (neueste = 1)
+SELECT
+    customer_id,
+    order_id,
+    order_date,
+    ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS rn
+FROM orders;
+
