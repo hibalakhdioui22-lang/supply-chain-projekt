@@ -107,3 +107,11 @@ SELECT
     ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS rn
 FROM orders;
 
+\\ Window Function :   RANK()
+ Ranke Produkte nach Revenue (höchster Revenue = Rang 1)
+SELECT
+    product_id,
+    revenue,
+    RANK() OVER (ORDER BY revenue DESC) AS revenue_rank
+FROM fact_order_items;
+ 
