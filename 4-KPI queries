@@ -98,8 +98,8 @@ GROUP By category
 HAVING sum (cost_price) > 100
 ORDER By  sum (cost_price) > 100 DESC ;
 
-\\ Window Fuction : ROW_NUMBER() 
- Nummeriere alle Bestellungen pro Kunde nach Datum (neueste = 1)
+ Window Fuction : ROW_NUMBER() 
+\\KPI 12 Nummeriere alle Bestellungen pro Kunde nach Datum (neueste = 1)
 SELECT
     customer_id,
     order_id,
@@ -107,11 +107,29 @@ SELECT
     ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS rn
 FROM orders;
 
-\\ Window Function :   RANK()
- Ranke Produkte nach Revenue (höchster Revenue = Rang 1)
+ Window Function :   RANK()
+\\KPI 13:Ranke Produkte nach Revenue (höchster Revenue = Rang 1)
 SELECT
     product_id,
     revenue,
     RANK() OVER (ORDER BY revenue DESC) AS revenue_rank
 FROM fact_order_items;
- 
+
+\\KPI 14 : Gesamtumsatz pro Produkt
+SELECT product_id, SUM(revenue) AS total_revenue
+FROM fact_order_items
+GROUP BY product_id;
+
+\\KPI 15 : Nur Produkte mit Gesamtumsatz über 500
+SELECT product_id, SUM(revenue) AS total_revenue
+FROM fact_order_items
+GROUP BY product_id
+HAVING SUM(revenue) > 500;
+
+\\KPI 16 :  Produktname + Gesamtumsatz (JOIN mit dim_product)
+SELECT p.product_name, SUM(f.revenue) AS total_revenue
+FROM fact_order_items f
+JOIN dim_product p ON f.product_id = p.product_id
+GROUP BY p.product_name
+ORDER BY total_revenue DESC;
+
