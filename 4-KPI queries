@@ -133,3 +133,21 @@ JOIN dim_product p ON f.product_id = p.product_id
 GROUP BY p.product_name
 ORDER BY total_revenue DESC;
 
+\\KPI 17: Ranke Kunden nach Anzahl ihrer Bestellungen (DENSE_RANK)
+SELECT
+    customer_id,
+    COUNT(*) AS total_orders,
+    DENSE_RANK() OVER (ORDER BY COUNT(*) DESC) AS customer_rank
+FROM orders
+GROUP BY customer_id;
+
+\\KPI 18. Durchschnittliche Lieferzeit pro Bestellung
+SELECT AVG(JULIANDAY(delivery_date) - JULIANDAY(shipped_date)) AS avg_delivery_days
+FROM shipments
+WHERE delivery_date IS NOT NULL;
+
+\\KPI 19: Wie viele Bestellungen pro Status?
+SELECT status, COUNT(*) AS total
+FROM orders
+GROUP BY status;
+
