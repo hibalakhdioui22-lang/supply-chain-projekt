@@ -151,3 +151,9 @@ SELECT status, COUNT(*) AS total
 FROM orders
 GROUP BY status;
 
+\\KPI 20 : Zeige Kunden + deren Bestellstatus (JOIN 3 Tabellen)
+SELECT c.name, o.order_id, o.status
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+JOIN shipments s ON o.order_id = s.order_id;
+
