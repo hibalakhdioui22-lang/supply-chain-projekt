@@ -14,6 +14,16 @@ INSERT INTO customers (customer_id, name, country, email, phone, city, segment) 
 (11, 'Tim Braun', 'Germany', 'tim.braun@example.com', '+49 174 78901234', 'Duesseldorf', 'Standard'),
 (12, 'Julia Hartmann', 'Austria', 'julia.hartmann@example.com', '+43 664 3456789', 'Graz', 'Premium'),
 (13, 'David Wolf', 'Germany', 'david.wolf@example.com', '+49 175 89012345', 'Leipzig', 'Enterprise');
+(14, 'Nina Berger', 'Germany', 'nina.berger@example.com', '+49 176 11122233', 'Bremen', 'Standard'),
+(15, 'Tom Richter', 'Austria', 'tom.richter@example.com', '+43 660 9876543', 'Linz', 'Premium'),
+(16, 'Sarah Keller', 'Switzerland', 'sarah.keller@example.com', '+41 79 1234567', 'Basel', 'Standard'),
+(17, 'Michael Zimmermann', 'Germany', 'michael.zimmermann@example.com', '+49 151 99887766', 'Dresden', 'Enterprise'),
+(18, 'Elena Vogel', 'Germany', 'elena.vogel@example.com', '+49 152 88776655', 'Nuremberg', 'Standard'),
+(19, 'Daniel Krueger', 'Austria', 'daniel.krueger@example.com', '+43 664 7654321', 'Innsbruck', 'Premium'),
+(20, 'Julia Frank', 'Switzerland', 'julia.frank@example.com', '+41 78 2345671', 'Bern', 'Standard'),
+(21, 'Markus Lange', 'Germany', 'markus.lange@example.com', '+49 173 55443322', 'Hannover', 'Premium'),
+(22, 'Christina Schmid', 'Germany', 'christina.schmid@example.com', '+49 174 66554433', 'Essen', 'Enterprise'),
+(23, 'Robert Huber', 'Austria', 'robert.huber@example.com', '+43 676 1122334', 'Klagenfurt', 'Standard');
 
 
 INSERT INTO orders VALUES
@@ -25,7 +35,28 @@ INSERT INTO orders VALUES
 (106, 6, '2024-01-08', 'Delivered'),
 (107, 7, '2024-01-09', 'Created'),
 (108, 1, '2024-01-10', 'Shipped'),
-(109, 2, '2024-01-11', 'Delivered');
+(109, 2, '2024-01-11', 'Delivered'),
+(110, 8,  '2024-01-12', 'Delivered'),
+(111, 9,  '2024-01-12', 'Shipped'),
+(112, 10, '2024-01-13', 'Delivered'),
+(113, 11, '2024-01-13', 'Processing'),
+(114, 12, '2024-01-14', 'Created'),
+(115, 13, '2024-01-14', 'Delivered'),
+(116, 14, '2024-01-15', 'Shipped'),
+(117, 15, '2024-01-15', 'Delivered'),
+(118, 16, '2024-01-16', 'Processing'),
+(119, 17, '2024-01-16', 'Delivered'),
+(120, 18, '2024-01-17', 'Created'),
+(121, 19, '2024-01-17', 'Shipped'),
+(122, 20, '2024-01-18', 'Delivered'),
+(123, 21, '2024-01-18', 'Delivered'),
+(124, 22, '2024-01-19', 'Processing'),
+(125, 23, '2024-01-19', 'Shipped'),
+(126, 1,  '2024-01-20', 'Delivered'),
+(127, 3,  '2024-01-20', 'Delivered'),
+(128, 5,  '2024-01-21', 'Created'),
+(129, 7,  '2024-01-21', 'Shipped'),
+(130, 9,  '2024-01-22', 'Delivered');
 
 INSERT INTO shipments VALUES
 (1, 101, '2024-01-04', '2024-01-06'),
@@ -41,6 +72,20 @@ INSERT INTO order_status_history VALUES
 (2, 101, 'Processing', '2024-01-02'),
 (3, 101, 'Shipped', '2024-01-04'),
 (4, 101, 'Delivered', '2024-01-06');
+(5,  110, 'Created',    '2024-01-12'),
+(6,  110, 'Processing', '2024-01-12'),
+(7,  110, 'Shipped',    '2024-01-13'),
+(8,  110, 'Delivered',  '2024-01-15'),
+(9,  113, 'Created',    '2024-01-13'),
+(10, 113, 'Processing', '2024-01-14'),
+(11, 116, 'Created',    '2024-01-15'),
+(12, 116, 'Processing', '2024-01-15'),
+(13, 116, 'Shipped',    '2024-01-16'),
+(14, 120, 'Created',    '2024-01-17'),
+(15, 124, 'Created',    '2024-01-19'),
+(16, 124, 'Processing', '2024-01-20'),
+(17, 128, 'Created',    '2024-01-21');
+
 
 🟢 DIMENSION LAYER
 
@@ -83,6 +128,16 @@ INSERT INTO dim_product (product_id, product_name, category, brand, cost_price) 
 (8, 'Adidas Ultraboost', 'Footwear', 'Adidas', 180.00),
 (9, 'Instant Pot Duo', 'Home Appliances', 'Instant Pot', 89.00),
 (10, 'Dyson V11 Vacuum', 'Home Appliances', 'Dyson', 599.00);
+(11, 'iPad Air', 'Electronics', 'Apple', 549.00),
+(12, 'Galaxy Tab S9', 'Electronics', 'Samsung', 499.00),
+(13, 'Dell XPS 13', 'Computers', 'Dell', 1100.00),
+(14, 'HP Spectre x360', 'Computers', 'HP', 1250.00),
+(15, 'Bose QuietComfort', 'Accessories', 'Bose', 329.00),
+(16, 'Apple Watch Series 9', 'Accessories', 'Apple', 399.00),
+(17, 'Adidas Superstar', 'Footwear', 'Adidas', 90.00),
+(18, 'Puma RS-X', 'Footwear', 'Puma', 110.00),
+(19, 'Philips Air Fryer', 'Home Appliances', 'Philips', 129.00),
+(20, 'KitchenAid Mixer', 'Home Appliances', 'KitchenAid', 379.00);
 
 INSERT INTO dim_date
 SELECT
